@@ -35,35 +35,45 @@ def buildMonthFolder(month, year):
     return
 
 def main():
-    # 1. open root folder
-    with open("rootFolderPath.txt", "r") as file:
-        rootFolderName = file.readline()
+    try:
+        # 1. open root folder
+        with open("rootFolderPath.txt", "r") as file:
+            rootFolderName = file.readline()
 
-    # 2. ask for year and month
-    year = int(input("What year to input for? (1 - 9999)"))
-    month = int(input("What month to input for? (1 - 12)"))
+        # 2. ask for year and month
+        year = int(input("What year to input for? (1 - 9999)"))
+        month = int(input("What month to input for? (1 - 12)"))
 
-    # 3. get all the days in that month of that year
-    days = getDaysInMonthYear(month, year)
+        # 3. get all the days in that month of that year
+        days = getDaysInMonthYear(month, year)
 
-    # 4. create new month folder inside of root folder
-    directory = numToMonth[month] + " " + str(year)
-    path = os.path.join(rootFolderName, directory)
-    os.mkdir(path)
-    print("New month folder created in " + path)
+        # 4. create new month folder inside of root folder
+        directory = numToMonth[month] + " " + str(year)
+        path = os.path.join(rootFolderName, directory)
+        os.mkdir(path)
+        print("New month folder created in " + path)
 
 
-    # 5. create day folders inside of month folder
-    for monthDay in days:
-        formatMonthDay = str(monthDay).split("-")
-        year = formatMonthDay[0]
-        month = formatMonthDay[1]
-        day = formatMonthDay[2]
-        dayMonthYear = day + month + year
+        # 5. create day folders inside of month folder
+        for monthDay in days:
+            formatMonthDay = str(monthDay).split("-")
+            year = formatMonthDay[0]
+            month = formatMonthDay[1]
+            day = formatMonthDay[2]
+            dayMonthYear = day + month + year
         
-        dayPath = os.path.join(rootFolderName, directory, dayMonthYear)
-        os.mkdir(dayPath)
-    input()
+            dayPath = os.path.join(rootFolderName, directory, dayMonthYear)
+            os.mkdir(dayPath)
+        input()
+    except FileNotFoundError():
+        print("root folder not found")
+        while True:
+            pass
+        
+    except:
+        print("some error occured")
+        
+        
     return
     
 
